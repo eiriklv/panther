@@ -23,9 +23,9 @@ export const delay = ms => new Promise(resolve => setTimeout(resolve, ms))
 //     If not, wait until it is and then perform immediately.
 
 // Our worker saga. It does the actual orchestration
-export function* selectArtist(action) {
+export function* selectArtist(action, dispatch) {
+  console.log(action, dispatch, "Select artist generator!", performance.now())
   yield put(markArtistAsSelected(action.node));
-  console.log("TRANSITION STARTED", performance.now())
   yield delay(500);
   yield put(positionSelectedArtistToCenter());
 }

@@ -23,6 +23,7 @@ const POSITION_SELECTED_ARTIST_TO_CENTER = 'panther/nodes/POSITION_SELECTED_ARTI
 export default function reducer(state = fromJS(nodesData), action) {
   switch (action.type) {
     case MARK_ARTIST_AS_SELECTED:
+      console.log("Marking artist as selected!", performance.now())
       const nodeIndex = getNodeIndex(state, action.node)
 
       if ( typeof nodeIndex === 'undefined' ) {
@@ -31,6 +32,7 @@ export default function reducer(state = fromJS(nodesData), action) {
 
       return state.updateIn([FUTURE, 'nodes'], nodes => {
         return nodes.map( (node, index) => {
+          console.log("About to start!", performance.now())
           return nodeIndex === index
           ? node.set( 'selected', true )
           : node.set( 'rejected', true );
@@ -68,9 +70,14 @@ export default function reducer(state = fromJS(nodesData), action) {
 // ACTION CREATORS ///////
 /////////////////////////
 export function selectArtist(node) {
+  console.log("Select Artist called in action", performance.now())
   return {
     type: SELECT_ARTIST,
     node
+  }
+
+  return (dispatch, getState) => {
+    dispatch(markArtistAsSelected(node))
   }
 }
 
